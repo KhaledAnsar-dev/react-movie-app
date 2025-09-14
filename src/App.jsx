@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Search from "./Component/Search.jsx";
+import Spinner from "./Component/Spinner.jsx";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -38,7 +39,7 @@ const App = () => {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage(`Error fetching movies : ${error}`);
     } finally {
-      setIsLoading(false);
+      setIsLoading(true);
     }
   };
   useEffect(() => {
@@ -58,8 +59,23 @@ const App = () => {
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
         <section className="all-movies">
-          <h2>Al movies</h2>
-          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+          <h2>All movies</h2>
+          {isLoading ? (
+            <p className="text-white">
+              {" "}
+              <Spinner />
+            </p>
+          ) : errorMessage ? (
+            <p className="text-red-500">{errorMessage}</p>
+          ) : (
+            <ul>
+              {movies.map((movie) => (
+                <li key={movie.id} className="text-white">
+                  {movie.title}
+                </li>
+              ))}
+            </ul>
+          )}
         </section>
       </div>
     </main>
