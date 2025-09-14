@@ -39,7 +39,7 @@ const App = () => {
       console.error(`Error fetching movies: ${error}`);
       setErrorMessage(`Error fetching movies : ${error}`);
     } finally {
-      setIsLoading(true);
+      setIsLoading(false);
     }
   };
   useEffect(() => {
