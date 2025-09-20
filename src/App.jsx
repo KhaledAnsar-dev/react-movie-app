@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Search from "./Component/Search.jsx";
 import Spinner from "./Component/Spinner.jsx";
+import MovieCard from "./Component/MovieCard.jsx";
 
 const API_BASE_URL = "https://api.themoviedb.org/3";
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY;
@@ -18,10 +19,12 @@ const App = () => {
   const [movies, setMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchMovies = async () => {
+  const fetchMovies = async (query = "") => {
     setIsLoading(true);
     try {
-      const endPoint = `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
+      const endPoint = query
+        ? `${API_BASE_URL}/search/movie?query=${encodeURIComponent(query)}`
+        : `${API_BASE_URL}/discover/movie?sort_by=popularity.desc`;
       const res = await fetch(endPoint, API_OPTIONS);
 
       if (!res.ok) {
@@ -43,8 +46,8 @@ const App = () => {
     }
   };
   useEffect(() => {
-    fetchMovies();
-  }, []);
+    fetchMovies(searchTerm);
+  }, [searchTerm]);
 
   return (
     <main>
@@ -59,10 +62,9 @@ const App = () => {
           <Search searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
         </header>
         <section className="all-movies">
-          <h2>All movies</h2>
+          <h2 className="mt-6">All movies</h2>
           {isLoading ? (
             <p className="text-white">
-              {" "}
               <Spinner />
             </p>
           ) : errorMessage ? (
@@ -70,9 +72,7 @@ const App = () => {
           ) : (
             <ul>
               {movies.map((movie) => (
-                <li key={movie.id} className="text-white">
-                  {movie.title}
-                </li>
+                <MovieCard movie={movie} />
               ))}
             </ul>
           )}
