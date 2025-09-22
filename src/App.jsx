@@ -60,6 +60,8 @@ const App = () => {
       <div className="pattern" />
       <div className="wrapper text-amber-50">
         <header>
+          <img src="/logo.png" alt="logo" className="w-24 h-24" />
+
           <img src="/hero.png" alt="hero-image" />
           <h1>
             Find <span className="text-gradient">Movies</span> You’ll Enjoy
