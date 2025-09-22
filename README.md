@@ -25,8 +25,4 @@ Browse trending movies, search for your favorite titles, and explore movie detai
 
 ## 🚀 Getting Started
 
-1. **Clone the repo**
-   ```bash
-   git clone https://github.com/your-username/react-movie-app.git
-   cd react-movie-app
-   ```
+🚀 **Live Demo**: [QuickMovies](https://quickmovies.netlify.app/)
